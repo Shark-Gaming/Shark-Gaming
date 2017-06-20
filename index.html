@@ -8,16 +8,6 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="icon" href="Logo/favicon.ico" />
-  <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-101226950-1', 'auto');
-  ga('send', 'pageview');
-
-</script>
 <style>
 body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 .w3-bar,h1,button {font-family: "Montserrat", sans-serif}
@@ -29,7 +19,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 <div class="w3-top">
   <div class="w3-bar w3-red w3-card-2 w3-left-align w3-large">
     <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-red" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
-    <a href="index.html" class="w3-bar-item w3-button w3-padding-large w3-white">Home</a>
+    <a href="Home.html" class="w3-bar-item w3-button w3-padding-large w3-white">Home</a>
     <a href="Actuality.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Actuality</a>
     <a href="Games.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Games</a>
     <a href="Community.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Community</a>
@@ -50,6 +40,108 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
   <h1 class="w3-margin w3-jumbo">Coming Out</h1>
   <p class="w3-xlarge">Gaming</p>
   <button class="w3-button w3-black w3-padding-large w3-large w3-margin-top">Get Started</button>
+  <div class="w3-center">
+    <p class="w3-xlarge">Mise à jour prévu dans :</p>
+      <script type="text/javascript">
+//###################################################################
+// Author: ricocheting.com
+// Version: v3.1
+// Date: 2017-01-03
+// Description: displays the amount of time until the "dateFuture" entered below.
+
+var CDown = function() {
+  this.state=0;// if initialized
+  this.counts=[];// array holding countdown date objects and id to print to {d:new Date(2013,11,18,18,54,36), id:"countbox1"}
+  this.interval=null;// setInterval object
+}
+
+CDown.prototype = {
+  init: function(){
+    this.state=1;
+    var self=this;
+    this.interval=window.setInterval(function(){self.tick();}, 1000);
+  },
+  add: function(date,id){
+    this.counts.push({d:date,id:id});
+    this.tick();
+    if(this.state==0) this.init();
+  },
+  expire: function(idxs){
+    for(var x in idxs) {
+      this.display(this.counts[idxs[x]], "Now!");
+      this.counts.splice(idxs[x], 1);
+    }
+  },
+  format: function(r){
+    var pre='',post='',divide=', ',
+      out="";
+    if(r.d != 0){out += pre+r.d +" "+((r.d==1)?"day":"days")+post+divide;}
+    if(r.h != 0){out += pre+r.h +" "+((r.h==1)?"hour":"hours")+post+divide;}
+    out += pre+r.m +" "+((r.m==1)?"min":"mins")+post+divide;
+    out += pre+r.s +" "+((r.s==1)?"sec":"secs")+post+divide;
+
+    return out.substr(0,out.length-divide.length);
+  },
+  math: function(work){
+    var y=w=d=h=m=s=ms=0;
+
+    ms=(""+((work%1000)+1000)).substr(1,3);
+    work=Math.floor(work/1000);//kill the "milliseconds" so just secs
+
+    y=Math.floor(work/31536000);//years (no leapyear support)
+    w=Math.floor(work/604800);//weeks
+    d=Math.floor(work/86400);//days
+    work=work%86400;
+
+    h=Math.floor(work/3600);//hours
+    work=work%3600;
+
+    m=Math.floor(work/60);//minutes
+    work=work%60;
+
+    s=Math.floor(work);//seconds
+
+    return {y:y,w:w,d:d,h:h,m:m,s:s,ms:ms};
+  },
+  tick: function(){
+    var now=(new Date()).getTime(),
+      expired=[],cnt=0,amount=0;
+
+    if(this.counts)
+    for(var idx=0,n=this.counts.length; idx<n; ++idx){
+      cnt=this.counts[idx];
+      amount=cnt.d.getTime()-now;//calc milliseconds between dates
+
+      // if time is already past
+      if(amount<0){
+        expired.push(idx);
+      }
+      // date is still good
+      else{
+        this.display(cnt, this.format(this.math(amount)));
+      }
+    }
+
+    // deal with any expired
+    if(expired.length>0) this.expire(expired);
+
+    // if no active counts, stop updating
+    if(this.counts.length==0) window.clearTimeout(this.interval);
+    
+  },
+  display: function(cnt,msg){
+    document.getElementById(cnt.id).innerHTML=msg;
+  }
+};
+
+window.onload=function(){
+  var cdown = new CDown();
+
+  cdown.add(new Date(2017,05,21,16,30,00), "countbox1");
+};
+</script>
+<div id="countbox1" style="font:20pt Montserrat; color:white;"></div>
+    </div>
 </header>
 
 <!-- First Grid -->
@@ -118,8 +210,6 @@ function myFunction() {
     }
 }
 </script>
-  
-  
 
 </body>
 </html>
